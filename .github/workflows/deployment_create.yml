@@ -6,7 +6,7 @@ on:
       - created
 
 jobs:
-  push_data:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
