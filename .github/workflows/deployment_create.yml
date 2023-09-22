@@ -1,0 +1,29 @@
+name: Deployment Workflow
+
+on:
+  deployment:
+    types:
+      - created
+
+jobs:
+  push_data:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Push Data to Endpoint
+        run: |
+          # Define the endpoint URL you want to push data to
+          ENDPOINT_URL="https://stag-events.sumologic.net/receiver/v1/http/ZaVnC4dhaV0axTqzSukhxF0I2MiGRhW5pWsbUvz-P8gOxn5Ocier2vXil1Gjp2X83LOOCOaPvKc2xm-8rnd6dTcXZZ2lJbg0rLWZv3HZMwaHW4hnZM2fKw=="
+
+          # Create a JSON payload (you can modify this as needed)
+          PAYLOAD="{\"pull_request_number\": ${{ github.event.pull_request.number }}, \"action\": \"${{ github.event.action }}\"}"
+
+          # Send a POST request to the endpoint
+          curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$ENDPOINT_URL"
+          
+        env:
+          ENDPOINT_URL: ${{ secrets.ENDPOINT_URL }}
+          # You can add any additional secrets or environment variables here if needed
