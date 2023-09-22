@@ -19,7 +19,7 @@ jobs:
           ENDPOINT_URL="https://stag-events.sumologic.net/receiver/v1/http/ZaVnC4dhaV0axTqzSukhxF0I2MiGRhW5pWsbUvz-P8gOxn5Ocier2vXil1Gjp2X83LOOCOaPvKc2xm-8rnd6dTcXZZ2lJbg0rLWZv3HZMwaHW4hnZM2fKw=="
 
           # Create a JSON payload (you can modify this as needed)
-          PAYLOAD="{\"pull_request_number\": ${{ github.event.pull_request.number }}, \"action\": \"${{ github.event.action }}\"}"
+          PAYLOAD="{\"event_type\": \"create_deployment\", \"action\": \"${{ github.event.action }}\"}"
 
           # Send a POST request to the endpoint
           curl -X POST -H "Content-Type: application/json" -d "$PAYLOAD" "$ENDPOINT_URL"
